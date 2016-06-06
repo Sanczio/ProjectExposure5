@@ -284,7 +284,7 @@ public class ScriptPlayerControls : MonoBehaviour {
 				}
 				if (axleInfo.motor )
 				{
-					if (velocity.magnitude > 19.0f)
+					if (velocity.magnitude > 14.0f)
 						motor = -motor;
 					axleInfo.leftWheel.motorTorque = motor;
 					axleInfo.rightWheel.motorTorque = motor;
