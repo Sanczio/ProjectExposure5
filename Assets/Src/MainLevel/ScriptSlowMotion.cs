@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 public class ScriptSlowMotion : MonoBehaviour {
 
@@ -17,6 +18,8 @@ public class ScriptSlowMotion : MonoBehaviour {
 		defaultTrashSpeed = gameplay.trash_escape_speed;
 		defaultCivilSpeed = gameplay.civilcar_speed;
 		defaultEnemySpeed = gameplay.enemy_speed;
+
+		//GameObject.Find ("Main Camera").AddComponent<MotionBlur> ();
 	}
 
 
@@ -44,6 +47,7 @@ public class ScriptSlowMotion : MonoBehaviour {
                 tempScript.SetCarSpeed(defaultCivilSpeed, defaultEnemySpeed);
             }
         }
+		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = false;
 
     }
 
@@ -75,6 +79,8 @@ public class ScriptSlowMotion : MonoBehaviour {
                 tempScript.SetCarSpeed(defaultCivilSpeed * percentToSlow, defaultEnemySpeed * percentToSlow);
             }
         }
+
+		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = true;
         
 		StartCoroutine (ReturnToNormal (time,ifPlayerSlowed));
 	}

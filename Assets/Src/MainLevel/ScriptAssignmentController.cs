@@ -11,14 +11,11 @@ public class ScriptAssignmentController : MonoBehaviour {
 	private int assignmentNr = 0;
 	private bool collidingWithAssignmentGiver = false;
 
-	private Text timer_text;
-	private Text trash_a_text;
-	private Text trash_b_text;
-	private Text trash_c_text;
-	private Text trash_bio_text;
+
 
 	private GameObject timeSlider;
 	private GameObject energySlider;
+
 
 	private GameObject canvas;
 	private GameObject trash_a_prefab;
@@ -103,7 +100,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 
 		//timer_text.gameObject.transform.position = new Vector3 (timer_text.gameObject.transform.position.x, Screen.height / 8 * 7 , 0);
 
-		StartCoroutine (spawnStartHUD (8));
+		StartCoroutine (spawnStartHUD (3));
 		//StartCoroutine (showStartVideo (5));
 	}
 
@@ -208,6 +205,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 				// add on complete hud image
 				break;
 			case 1:
+				
 				break;
 			case 2:
 				break;
@@ -220,7 +218,9 @@ public class ScriptAssignmentController : MonoBehaviour {
 	}
 
 
-
+	private float trash_a_dif = 0;
+	private float trash_b_dif = 0;
+	private float trash_c_dif = 0;
 
 
 
@@ -236,6 +236,8 @@ public class ScriptAssignmentController : MonoBehaviour {
 				temp_image.transform.SetParent (canvas.transform, false);
 				a_trash_images.Add (temp_image);
 			}
+			trash_a_dif = tempDif;
+			Debug.Log (trash_a_dif);
 		}
 
 		if (assignment [assignmentNr] [1] > 0) {
@@ -247,6 +249,8 @@ public class ScriptAssignmentController : MonoBehaviour {
 				temp_image.transform.SetParent (canvas.transform, false);
 				b_trash_images.Add (temp_image);
 			}
+			trash_b_dif = tempDif;
+			Debug.Log (trash_b_dif);
 		}
 
 		if (assignment [assignmentNr] [2] > 0) {
@@ -258,6 +262,8 @@ public class ScriptAssignmentController : MonoBehaviour {
 				temp_image.transform.SetParent (canvas.transform, false);
 				c_trash_images.Add (temp_image);
 			}
+			trash_c_dif = tempDif;
+			Debug.Log (trash_c_dif);
 		}
 
 			
@@ -284,26 +290,43 @@ public class ScriptAssignmentController : MonoBehaviour {
 		player_trash [3] = 0;
 	}
 
+	private void showFeedback(Vector2 position , string feedback)
+	{
+		GameObject feedbackPrefab;
+		feedbackPrefab = (GameObject)Resources.Load("prefabs/CanvasPrefabs/feedbackText");
+		feedbackPrefab = (GameObject)Instantiate (feedbackPrefab, position, feedbackPrefab.transform.rotation);
+		feedbackPrefab.transform.SetParent (canvas.transform, false);
+		feedbackPrefab.GetComponent<Text> ().text = feedback;
+		Destroy (feedbackPrefab, 3);
+	}
+
 	private void colorImage(int trashNr)
 	{
+		float offset = 70;
 		
 		if (trashNr == 1 && player_trash[1] <= assignment[assignmentNr][0] ) {
 			a_trash_images[ player_trash[1] - 1 ].GetComponent<Button>().interactable = true;
+			showFeedback (new Vector2 (trash_a_dif + offset, a_trash_images [0].transform.position.y) ,"+ 1" );
 		}
 		if (trashNr == 2 && player_trash[2] <= assignment[assignmentNr][1] ) {
 			b_trash_images[ player_trash[2] - 1 ].GetComponent<Button>().interactable = true;
+			showFeedback (new Vector2 (trash_b_dif + offset, b_trash_images [0].transform.position.y) ,"+ 1" );
 		}
 		if (trashNr == 3 && player_trash[3] <= assignment[assignmentNr][2] ) {
 			c_trash_images[ player_trash[3] - 1 ].GetComponent<Button>().interactable = true;
+			showFeedback (new Vector2 (trash_c_dif + offset, c_trash_images [0].transform.position.y) ,"+ 1" );
 		}
 		if (trashNr == -1 && player_trash[1] > 0 && player_trash[1] <= assignment[assignmentNr][0]) {
 			a_trash_images[ player_trash[1] -1].GetComponent<Button>().interactable = false;
+			showFeedback (new Vector2 (trash_a_dif + offset, a_trash_images [0].transform.position.y) ,"- 1" );
 		}
 		if (trashNr == -2 && player_trash[2] > 0 && player_trash[2] <= assignment[assignmentNr][1] ) {
 			b_trash_images[ player_trash[2] -1].GetComponent<Button>().interactable = false;
+			showFeedback (new Vector2 (trash_b_dif + offset, b_trash_images [0].transform.position.y) ,"- 1" );
 		}
 		if (trashNr == -3 && player_trash[3] > 0 && player_trash[3] <= assignment[assignmentNr][2]) {
 			c_trash_images[ player_trash[3] -1].GetComponent<Button>().interactable = false;
+			showFeedback (new Vector2 (trash_c_dif + offset, c_trash_images [0].transform.position.y) ,"- 1" );
 		}
 	}
 
