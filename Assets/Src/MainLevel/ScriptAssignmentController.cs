@@ -50,7 +50,12 @@ public class ScriptAssignmentController : MonoBehaviour {
 	private int[] player_trash = {0,0,0,0}; // 1 - a trash ; 2 - b trash ; 3 - c trash , 0 - bio waste
 	private int[] time_limits = new int[3];
 
-	void Start () {
+    public List<GameObject> _triggerListAssign_1 = new List<GameObject>();
+    public List<GameObject> _triggerListAssign_2 = new List<GameObject>();
+    public List<GameObject> _triggerListAssign_3 = new List<GameObject>();
+    public List<GameObject> _triggerListAssign_4 = new List<GameObject>();
+
+    void Start () {
 		hud = GameObject.Find ("Root").GetComponent<ScriptPlayerHUD> ();
 		canvas = GameObject.Find ("Canvas");
 		player = GameObject.Find ("Player").GetComponent<ScriptPlayerControls> ();
@@ -136,7 +141,39 @@ public class ScriptAssignmentController : MonoBehaviour {
 		calculateTime = true;
 		showVideo = true;
 
+        CallTriggers(nr);
 	}
+
+    void CallTriggers(int assigmentNr)
+    {
+        switch (assigmentNr)
+        {
+            case 0:
+                ActivateTriggerList(_triggerListAssign_1);
+                break;
+            case 1:
+                ActivateTriggerList(_triggerListAssign_2);
+                break;
+            case 2:
+                ActivateTriggerList(_triggerListAssign_3);
+                break;
+            case 3:
+                ActivateTriggerList(_triggerListAssign_4);
+                break;
+        }
+    }
+
+    void ActivateTriggerList(List<GameObject> _triggerList)
+    {
+        if (_triggerList.Count > 0)
+        {
+            foreach (GameObject trigger in _triggerList)
+            {
+                trigger.GetComponent<ScriptTrigger>().ActivateTrigger();
+            }
+        }
+        
+    }
 
 	IEnumerator spawnStartHUD( float time )
 	{
@@ -151,7 +188,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 
 		spawnImages ();
 		calculateTime = true;
-
+        
 	}
 
 	public void setDeliveringGoods(int giverNum) // 0 - tuto , 1 - area1 , etc.
