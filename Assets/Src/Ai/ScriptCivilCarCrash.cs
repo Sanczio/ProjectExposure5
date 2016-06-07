@@ -21,7 +21,10 @@ public class ScriptCivilCarCrash : MonoBehaviour {
             //print("Hit by player");
             _hitCount++;
             if (_hitCount == 1)
-            { _carScript.StopAgentInCar(); }
+            { 
+				_carScript.StopAgentInCar(); 
+				addForce (otherObject);
+			}
 
             if (_hitCount == 1)
             {
@@ -31,6 +34,13 @@ public class ScriptCivilCarCrash : MonoBehaviour {
         }
 
     }
+
+	private void addForce(Collision collider)
+	{
+		Rigidbody tempRigidbody = gameObject.GetComponent<Rigidbody>();
+		tempRigidbody.isKinematic = false;
+		tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.00001f, ForceMode.Force);
+	}
 
     //Play Crash animation before this
     void DestroyCar()

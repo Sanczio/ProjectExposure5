@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 public class ScriptSlowMotion : MonoBehaviour {
 
@@ -45,6 +46,8 @@ public class ScriptSlowMotion : MonoBehaviour {
             }
         }
 
+		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = false;
+
     }
 
 
@@ -75,7 +78,7 @@ public class ScriptSlowMotion : MonoBehaviour {
                 tempScript.SetCarSpeed(defaultCivilSpeed * percentToSlow, defaultEnemySpeed * percentToSlow);
             }
         }
-        
+		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = true;
 		StartCoroutine (ReturnToNormal (time,ifPlayerSlowed));
 	}
 }
