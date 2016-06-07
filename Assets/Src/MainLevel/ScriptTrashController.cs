@@ -22,6 +22,8 @@ public class ScriptTrashController : MonoBehaviour {
 
 	private ScriptAssignmentController assignmentController;
 
+	private GameObject arrow;
+
 
 
 	void Start () {
@@ -34,7 +36,7 @@ public class ScriptTrashController : MonoBehaviour {
 		recycable_spawn_prefabs[0] = (GameObject)Resources.Load("prefabs/recycable_trash_a"); // 
 		recycable_spawn_prefabs[1] = (GameObject)Resources.Load("prefabs/recycable_trash_b"); // 
 		recycable_spawn_prefabs[2] = (GameObject)Resources.Load("prefabs/recycable_trash_c"); // 
-
+		arrow = (GameObject)Resources.Load("prefabs/CanvasPrefabs/arrowGreen");
 
 		recycable_spawns = GameObject.FindGameObjectsWithTag ("recycable_spawn").ToList();
 		Debug.Log (recycable_spawns.Count);
@@ -83,6 +85,11 @@ public class ScriptTrashController : MonoBehaviour {
 			trash_onscene.Add (tempTrashObj);
                 tempTrashObj.GetComponent<ScriptPickUpRunAway>().setActive(activeAfterSpawn);
                 break;
+		}
+
+		if (arrow != null) {
+			arrow = (GameObject)Instantiate (arrow, arrow.transform.position, arrow.transform.rotation);
+			arrow.transform.SetParent (tempTrashObj.transform, false);
 		}
 
 	}

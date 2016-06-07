@@ -271,9 +271,9 @@ public class ScriptPlayerControls : MonoBehaviour {
 				braking = true; 
 				pressedMouse = false;
 			} else if (pressedMouse && !touchScreen) {
-				forceRotation = (BottomRedionLimits.x + BottomRedionLimits.width / 2 ) - controlVector.x;
+				forceRotation = (BottomRegion.x + BottomRegion.width / 2 ) - controlVector.x;
 				forceRotation = -forceRotation / controlVector.x * rotationScale;
-				forceSpeed = (BottomRedionLimits.y + BottomRedionLimits.height / 2) - controlVector.y;
+				forceSpeed = (BottomRegion.y + BottomRegion.height / 2) - controlVector.y;
 				forceSpeed = -forceSpeed / controlVector.y * speedScale;
 				forceSpeed = Mathf.Clamp (forceSpeed, -1.0f, 1.0f);
 				forceRotation = Mathf.Clamp (forceRotation, -1.0f, 1.0f);

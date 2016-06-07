@@ -82,7 +82,9 @@ public class ScriptSlowMotion : MonoBehaviour {
             }
         }
 
+
 		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = true;
+        
 		StartCoroutine (ReturnToNormal (time,ifPlayerSlowed));
 	}
 }

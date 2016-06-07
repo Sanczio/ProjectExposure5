@@ -52,6 +52,7 @@ public class ScriptCarSpawner : MonoBehaviour {
         ScriptCivilCar tempCarScript = spawnCar.GetComponent<ScriptCivilCar>();
         tempCarScript.AfterSpawn(currentRoad, roadSide, activeAfterStart);
 
+
         _carsOnScene.Add(spawnCar);
     }
 
@@ -74,6 +75,14 @@ public class ScriptCarSpawner : MonoBehaviour {
         GameObject spawnCar = Instantiate(_enemyCar, correctWaypoint.transform.position, Quaternion.identity) as GameObject;
         ScriptCivilCar tempCarScript = spawnCar.GetComponent<ScriptCivilCar>();
         tempCarScript.AfterSpawn(currentRoad, roadSide, activeAfterStart);
+
+		GameObject arrow;
+		//if (arrow != null) {
+		arrow = (GameObject)Resources.Load("prefabs/CanvasPrefabs/arrow");
+		arrow = (GameObject)Instantiate (arrow, arrow.transform.position, arrow.transform.rotation);
+		arrow.transform.SetParent (spawnCar.transform, false);
+		//}
+
 
         _carsOnScene.Add(spawnCar);
     }
