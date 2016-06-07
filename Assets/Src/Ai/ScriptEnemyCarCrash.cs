@@ -23,6 +23,7 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
 
     void OnCollisionEnter(Collision otherObject)
     {
+        
         print(otherObject.gameObject.tag);
         if (otherObject.gameObject.tag == "Player" || otherObject.gameObject.tag == "bullet")
         {
@@ -32,6 +33,7 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
             if (_hitCount == 1)
             {
                 StopAgent();
+                if (otherObject.gameObject.tag == "Player")
 				addForce (otherObject);
             }
 
@@ -58,8 +60,10 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
 	{
 		Rigidbody tempRigidbody = gameObject.GetComponent<Rigidbody>();
 		tempRigidbody.isKinematic = false;
-		tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.000001f, ForceMode.Force);
-	}
+		//tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.000001f, ForceMode.Force);
+        
+
+    }
 
 
 
