@@ -50,7 +50,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 	private int[] player_trash = {0,0,0,0}; // 1 - a trash ; 2 - b trash ; 3 - c trash , 0 - bio waste
 	private int[] time_limits = new int[3];
 
-    public List<GameObject> _triggerListAssign_1 = new List<GameObject>();
+    public List<GameObject> _triggerListAssign_1 = new List<GameObject>(); 
     public List<GameObject> _triggerListAssign_2 = new List<GameObject>();
     public List<GameObject> _triggerListAssign_3 = new List<GameObject>();
     public List<GameObject> _triggerListAssign_4 = new List<GameObject>();
@@ -119,6 +119,9 @@ public class ScriptAssignmentController : MonoBehaviour {
 			
 		if (calculateTime && time_left > 0 ) {
 			time_left -= Time.deltaTime;
+			if (time_left < 15) {
+				//hud.SpawnImage ("tutorial_image_3", 2);
+			}
 		}
 		if (timeSlider)
 			timeSlider.GetComponent<Slider> ().value = time_left;
@@ -199,10 +202,12 @@ public class ScriptAssignmentController : MonoBehaviour {
 				assignmentNr += 1;
 			calculateTime = false;
 			showVideo = false;
+			StartCoroutine (changeAssignment (3,giverNum));
+			hud.SpawnImage ("tutorial_image_4", 4);
 
 			switch (giverNum) {
 			case 0:
-				StartCoroutine (changeAssignment (5,giverNum));
+				
 				// add on complete hud image
 				break;
 			case 1:
@@ -213,8 +218,8 @@ public class ScriptAssignmentController : MonoBehaviour {
 			case 3:
 				break;
 			}
-		} else if ( showVideo )
-			GameObject.Find ("videoTexture").GetComponent<ScriptMovieTexture> ().playVideo (""+giverNum.ToString() );
+		} //else if ( showVideo )
+			//GameObject.Find ("videoTexture").GetComponent<ScriptMovieTexture> ().playVideo (""+giverNum.ToString() );
 
 	}
 
@@ -232,7 +237,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 			int tempDif = 0;
 			for (int i = 0; i < assignment [assignmentNr] [0]; i++) {
 				GameObject temp_image;
-				temp_image = (GameObject)Instantiate (trash_a_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 9) , trash_a_prefab.transform.rotation);
+				temp_image = (GameObject)Instantiate (trash_a_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 8) , trash_a_prefab.transform.rotation);
 				tempDif += 140;
 				temp_image.transform.SetParent (canvas.transform, false);
 				a_trash_images.Add (temp_image);
@@ -245,7 +250,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 			int tempDif = 0;
 			for (int i = 0; i < assignment [assignmentNr] [1]; i++) {
 				GameObject temp_image;
-				temp_image = (GameObject)Instantiate (trash_b_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 7) , trash_b_prefab.transform.rotation);
+				temp_image = (GameObject)Instantiate (trash_b_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 5) , trash_b_prefab.transform.rotation);
 				tempDif += 140;
 				temp_image.transform.SetParent (canvas.transform, false);
 				b_trash_images.Add (temp_image);
@@ -258,7 +263,7 @@ public class ScriptAssignmentController : MonoBehaviour {
 			int tempDif = 0;
 			for (int i = 0; i < assignment [assignmentNr] [2]; i++) {
 				GameObject temp_image;
-				temp_image = (GameObject)Instantiate (trash_c_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 5) , trash_c_prefab.transform.rotation);
+				temp_image = (GameObject)Instantiate (trash_c_prefab, new Vector2(Screen.width / 10 + tempDif,Screen.height / 10 * 3) , trash_c_prefab.transform.rotation);
 				tempDif += 140;
 				temp_image.transform.SetParent (canvas.transform, false);
 				c_trash_images.Add (temp_image);

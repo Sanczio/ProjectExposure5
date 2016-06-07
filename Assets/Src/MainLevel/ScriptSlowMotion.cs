@@ -81,7 +81,10 @@ public class ScriptSlowMotion : MonoBehaviour {
                 tempScript.SetCarSpeed(defaultCivilSpeed * percentToSlow, defaultEnemySpeed * percentToSlow);
             }
         }
+
+
 		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = true;
+        
 		StartCoroutine (ReturnToNormal (time,ifPlayerSlowed));
 	}
 }
