@@ -59,9 +59,13 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
 	private void addForce(Collision collider)
 	{
 		Rigidbody tempRigidbody = gameObject.GetComponent<Rigidbody>();
-		tempRigidbody.isKinematic = false;
-		//tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.000001f, ForceMode.Force);
-        
+        tempRigidbody.maxDepenetrationVelocity = 30.0f;
+        print(tempRigidbody.maxDepenetrationVelocity);
+
+        tempRigidbody.isKinematic = false;
+
+        //tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.000001f, ForceMode.Force);
+
 
     }
 

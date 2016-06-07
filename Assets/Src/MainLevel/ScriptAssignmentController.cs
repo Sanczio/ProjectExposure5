@@ -168,7 +168,8 @@ public class ScriptAssignmentController : MonoBehaviour {
         if (_triggerList.Count > 0)
         {
             foreach (GameObject trigger in _triggerList)
-            {
+            {   
+                if (trigger)
                 trigger.GetComponent<ScriptTrigger>().ActivateTrigger();
             }
         }
