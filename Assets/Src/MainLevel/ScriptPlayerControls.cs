@@ -72,6 +72,10 @@ public class ScriptPlayerControls : MonoBehaviour {
 		GetComponent<Rigidbody>().centerOfMass = centerOfMassCorrection;
 		smallCircle = GameObject.Find ("smallCircle");
 		controller = GameObject.Find ("Joystick").GetComponent<Button> ();
+		//RectTransform rectController = controller.GetComponent<RectTransform> ();
+		//rectController.rect.width = Screen.width / 4;
+		//rectController.rect.height = rectController.rect.width;
+
 		controlSettings = GameObject.Find ("Root").GetComponent<ScriptSettingsControls> ();
 		hud = GameObject.Find ("Root").GetComponent<ScriptPlayerHUD> ();
         _scriptPlayerShooting = GameObject.Find("Player").GetComponent<ScriptPlayerShooting>();
@@ -128,15 +132,20 @@ public class ScriptPlayerControls : MonoBehaviour {
 		
 	void Update()
 	{
-		
+		Vector2 controlVector;
 
-		if (Input.GetMouseButtonDown(0) || lastScreenTouch.phase == TouchPhase.Began)
+		if (touchScreen)
+			controlVector = new Vector2 (lastScreenTouch.position.x, lastScreenTouch.position.y);
+		else
+			controlVector = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
+
+		if (Input.GetMouseButtonDown(0) || ( touchScreen && lastScreenTouch.phase == TouchPhase.Began) )
         {
-            
+			Debug.Log ("1");
             RaycastHit hit;
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(lastScreenTouch.position), out hit, 100))
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(controlVector), out hit, 100))
             {
-                //print(hit.collider.name);
+				Debug.Log ("2");
                 if ((overallTrashCollected >= 1 || _unlimitedAmmo == true) && hit.transform.tag == "EnemyCar")
                 {
                     
@@ -219,6 +228,7 @@ public class ScriptPlayerControls : MonoBehaviour {
 			float forceRotation = 0;
 			float forceSpeed = 0;
 			bool controlInLimits = false;
+
 			Vector3 velocity = playerRigidbody.velocity; // get speed in world place ( velocity )
 			Vector3 localVel = transform.InverseTransformDirection (velocity); // transform to local space so we know our velocity in relation to our orientation 
 			Vector2 controlVector;
@@ -230,10 +240,11 @@ public class ScriptPlayerControls : MonoBehaviour {
 
 			if (BottomRedionLimits.Contains(controlVector) )
 				controlInLimits = true;
+			float distanceToCenter = Vector2.Distance (controlVector, BottomRegion.center);
 
 			//Debug.Log (controlInLimits);
-
-			if (BottomRegion.Contains (controlVector) ) { // && Input.GetMouseButton(0)   && Input.GetMouseButton(0)
+			if ( distanceToCenter < BottomRegion.width / 2) {
+			//if (BottomRegion.Contains (controlVector) ) { // && Input.GetMouseButton(0)   && Input.GetMouseButton(0)
 				smallCircle.transform.position = controlVector;
 				pressedMouse = true;
 				//Debug.Log (BottomRegion.x + "  " + BottomRegion.width / 2+" "+controlVector.y);
@@ -272,12 +283,15 @@ public class ScriptPlayerControls : MonoBehaviour {
 
 
 			float motor = maxMotorTorque * forceSpeed; // Input.GetAxis("Vertical")
-			float steering = maxSteeringAngle * forceRotation; //  Input.GetAxis("Horizontal")
+			float steering = maxSteeringAngle * forceRotation ; //  Input.GetAxis("Horizontal")
+
+
 
 			foreach (AxleInfo axleInfo in axleInfos)
 			{
 				if (axleInfo.steering)
 				{
+					
 					axleInfo.leftWheel.steerAngle = steering;
 					axleInfo.rightWheel.steerAngle = steering;
 

@@ -32,6 +32,7 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
             if (_hitCount == 1)
             {
                 StopAgent();
+				addForce (otherObject);
             }
 
             if (_hitCount == 1)
@@ -52,6 +53,16 @@ public class ScriptEnemyCarCrash : MonoBehaviour {
         }
 
     }
+
+	private void addForce(Collision collider)
+	{
+		Rigidbody tempRigidbody = gameObject.GetComponent<Rigidbody>();
+		tempRigidbody.isKinematic = false;
+		tempRigidbody.AddForce (collider.gameObject.transform.forward * 0.000001f, ForceMode.Force);
+	}
+
+
+
 
     //Stop Agent and inform about that
     void StopAgent()

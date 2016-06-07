@@ -49,6 +49,8 @@ public class ScriptSlowMotion : MonoBehaviour {
         }
 		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = false;
 
+		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = false;
+
     }
 
 
@@ -79,9 +81,7 @@ public class ScriptSlowMotion : MonoBehaviour {
                 tempScript.SetCarSpeed(defaultCivilSpeed * percentToSlow, defaultEnemySpeed * percentToSlow);
             }
         }
-
 		GameObject.Find ("Main Camera").GetComponent<MotionBlur> ().enabled = true;
-        
 		StartCoroutine (ReturnToNormal (time,ifPlayerSlowed));
 	}
 }
